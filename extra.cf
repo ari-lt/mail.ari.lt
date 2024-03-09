@@ -1,2 +1,0 @@
-myhostname = mail.ari.lt
-smtp_helo_name = $mydomain
