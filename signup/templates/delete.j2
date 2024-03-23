@@ -1,0 +1,46 @@
+{% extends "base.j2" %}
+
+{% block head %}
+<script>const _K="{{ k }}",_V="{{ v }}"</script>
+<script src="{{ url_for("static", filename="ee2e.js") }}"></script>
+{% endblock %}
+
+{% block body %}
+<h1>Delete your existing <a href="https://{{ domain | escape }}/">{{ domain | escape }}</a> mailbox</h1>
+
+<p>
+    This form will delete your mailbox irreversably, if you want that, feel free to fill in the following form:
+</p>
+
+<form id="form">
+    <fieldset>
+        <legend>Delete your mailbox</legend>
+
+        <div class="form-group">
+            <label for="local_part">Username ([username]@{{ domain | escape }}):</label>
+            <input required minlength="{{ min_username }}" type="text" id="local_part" name="local_part" placeholder="jane" />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input required type="password" id="password" name="password" placeholder="Password..." />
+        </div>
+
+        <div class="form-group">{{ c }}</div>
+
+        <div class="form-group">
+            <label for="code">CAPTCHA:</label>
+            <input required type="text" id="code" name="code" placeholder="Enter the CAPTCHA above" />
+        </div>
+
+        <div class="form-group">
+            <label for="sure">I am sure that I want to delete the specified <a href="https://{{ mdomain | escape }}/">{{ mdomain | escape }}</a> mailbox IRREVERSABLY along with all of its data:</label>
+            <input required value="off" onclick="this.value=(this.value==='on'?'off':'on');this.checked=(this.value==='on')" type="checkbox" id="sure" name="sure" />
+        </div>
+
+        <button type="submit">I am 100% sure that I want to delete my mailbox IRREVERSABLY</button>
+    </fieldset>
+</form>
+
+<script>ee2e_form("form")</script>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "base.j2" %}
+
+{% block body %}
+<h1>API Response: HTTP/{{ c }}</h1>
+
+<p>See the <a href="." onclick="window.location.reload()">home page</a> to learn how to use this server. Here's what the server API returned:</p>
+
+<code><pre>{{ j | escape }}</pre></code>
+{% endblock %}

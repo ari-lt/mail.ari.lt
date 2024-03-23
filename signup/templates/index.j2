@@ -1,0 +1,107 @@
+{% extends "base.j2" %}
+
+{% block head %}
+<script>const _K="{{ k }}",_V="{{ v }}"</script>
+<script src="{{ url_for("static", filename="ee2e.js") }}"></script>
+{% endblock %}
+
+{% block body %}
+<h1>Sign up for an <a href="https://{{ domain | escape }}/">{{ domain | escape }}</a> e-mail</h1>
+
+<p>
+    If you want an e-mail address on this server, fill in the following form with <b>JavaScript and Cookies enabled</b>, this page also requires the <b>Browser crypto API</b>:
+</p>
+
+<p>
+    Make sure your username wouldn't violate common username rules and your password is strong enough (weak password will make the mailbox creation fail).
+    This e-mail is not fully anonymous, as <a href="https://mailcow.email/">Mailcow</a> logs:
+</p>
+
+<ul>
+    <li>IP addreesses</li>
+    <li>Login attempts</li>
+    <li>Autodiscover attempts</li>
+    <li>Rate limit triggers</li>
+    <li>Spam e-mail origin and target</li>
+</ul>
+
+<p>
+    So, by signing up, you also approve of this logging policy.
+</p>
+
+<form id="form">
+    <fieldset>
+        <legend>Sign up</legend>
+
+        <div class="form-group">
+            <label for="local_part">Username ([username]@{{ domain | escape }}):</label>
+            <input required minlength="{{ min_username }}" type="text" id="local_part" name="local_part" placeholder="jane" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Display name:</label>
+            <input required type="text" id="name" name="name" placeholder="Jane Dane" />
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input required type="password" id="password" name="password" placeholder="Password..." />
+        </div>
+
+        <div class="form-group">
+            <label for="password2">Password confirmation:</label>
+            <input required type="password" id="password2" name="password2" placeholder="Password confirmation..." />
+        </div>
+
+        <div class="form-group">{{ c }}</div>
+
+        <div class="form-group">
+            <label for="code">CAPTCHA:</label>
+            <input required type="text" id="code" name="code" placeholder="Enter the CAPTCHA above" />
+        </div>
+
+        <div class="form-group">
+            <label for="terms">I trust <a href="https://{{ mdomain | escape }}/">{{ mdomain | escape }}</a> ("the e-mail server") with my e-mails, and I agree to not use the email server for spam, phishing, or any other malicious or abusive purpose. I agree with the logging policy and I know that my e-mail may be terminated if abusive behaviour is detected and confirmed by the e-mail server administrators:</label>
+            <input required value="off" onclick="this.value=(this.value==='on'?'off':'on');this.checked=(this.value==='on')" type="checkbox" id="terms" name="terms" />
+        </div>
+
+        <button type="submit">Sign up</button>
+    </fieldset>
+</form>
+
+<i>Or maybe you want to <a href="./delete">delete your existing mailbox</a>?</i>
+
+<h2 id="how">How to use this server?</h2>
+
+<p>
+    This is just like any other e-mail server. You can use this server by using a client, for example:
+</p>
+
+<ul>
+    <li>Thunderbird: <a href="https://thunderbird.net/">https://thunderbird.net/</a></li>
+    <li>Gmail: <a href="https://mail.google.com/">https://mail.google.com/</a></li>
+    <li>... See: <a href="https://en.wikipedia.org/wiki/List_of_email_clients">List of e-mail clients</a></li>
+</ul>
+
+Or, any of the hosted ones:
+
+<ul>
+    <li>SOGo: <a href="https://{{ mdomain | escape }}/SOGo">https://{{ mdomain }}/SOGo</a> (username would be [username]@{{ domain }})</li>
+    <li>RoundCube: <a href="https://rc.{{ domain | escape }}/">https://rc.{{ domain | escape }}/</a> (username would be just [username])</li>
+</ul>
+
+<p>
+If you're configuring a client manually, keep in mind that the mail server is <b>{{ mdomain }}</b> not <b>{{ domain }}</b>.
+</p>
+
+<p>
+These are just used to compose and read your e-mails, to manage your account you can only use <a href="https://{{ mdomain | escape }}/">https://{{ mdomain | escape }}/</a>.
+</p>
+
+<p>
+To log into it, you navigate to it in your browser, and then you log in with your username being [username]@{{ domain }} and your password being your password.
+There you can manage things such as 2FA, spam rules, temporary aliases, etc.
+</p>
+
+<script>ee2e_form("form")</script>
+{% endblock %}

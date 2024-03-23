@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ari::web -&gt; Mail -&gt; Signup</title>
+
+    <meta name="description" content="Ari-web e-mail signup" />
+    <meta
+      name="keywords"
+      content="email, ari-web, ari, e-mail, privacy, privacy email, mailing"
+    />
+    <meta
+      name="robots"
+      content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large"
+    />
+    <meta property="og:type" content="website" />
+
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="black" />
+
+    <style>
+      html {
+        background-color: black;
+        color: whitesmoke;
+        font-family: sans-serif;
+      }
+      h1 {
+          text-align: center;
+      }
+      body {
+        margin: auto;
+        max-width: 1100px;
+        padding: 2em;
+      }
+      .form-group {
+        margin: 0.5em;
+      }
+      button {
+        text-align: center;
+        width: 80%;
+        margin: auto;
+        display: block;
+      }
+    </style>
+
+    {% block head %}{% endblock %}
+  </head>
+
+  <body>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <details open>
+      <summary>Messages from the server</summary>
+      <ul>
+      {% for message in messages %}
+       <li>{{ message | escape }}</li>
+      {% endfor %}
+      </ul>
+      </details>
+      {% endif %}
+    {% endwith %}
+    {% block body %}{% endblock %}
+  </body>
+</html>
