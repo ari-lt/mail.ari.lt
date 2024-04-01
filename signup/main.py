@@ -117,6 +117,7 @@ def ee2e_form() -> t.Union[int, t.Dict[str, t.Any]]:
 
 @app.get("/")
 @app.get("/signup")
+@app.get("/signup/")
 def index() -> str:
     """index"""
 
@@ -138,6 +139,7 @@ def index() -> str:
 
 @app.post("/")
 @app.post("/signup")
+@app.post("/signup/")
 @limiter.limit("5 per hour")
 def create() -> str:
     """create an email"""
@@ -184,7 +186,9 @@ def create() -> str:
 
 
 @app.get("/delete")
+@app.get("/delete/")
 @app.get("/signup/delete")
+@app.get("/signup/delete/")
 def delete() -> str:
     """delete a mailbox"""
 
@@ -205,7 +209,9 @@ def delete() -> str:
 
 
 @app.post("/delete")
+@app.post("/delete/")
 @app.post("/signup/delete")
+@app.post("/signup/delete/")
 @limiter.limit("5 per hour")
 def delete_mailbox() -> str:
     """delete mailbox"""
