@@ -29,6 +29,8 @@ from werkzeug.exceptions import HTTPException
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.wrappers import Response
 
+better_profanity.profanity.load_censor_words()
+
 app: flask.Flask = flask.Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1)  # type: ignore
 
@@ -169,9 +171,9 @@ def create() -> str:
         flask.flash("Username too short")
         return flask.abort(400)
 
-    if ("*" in better_profanity.censor(request["local_part"])) or (
-        "*" in better_profanity.censor(request["name"])
-    ):
+    if better_profanity.profanity.contains_profanity(
+        request["local_part"]
+    ) or better_profanity.profanity.contains_profanity(request["name"]):
         flask.flash("Public data contains profanity")
         return flask.abort(400)
 
