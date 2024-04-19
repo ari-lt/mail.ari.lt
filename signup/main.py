@@ -18,13 +18,13 @@ from warnings import filterwarnings as filter_warnings
 
 import flask
 import flask_ishuman
+import profanity  # type: ignore
 import requests
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.padding import PKCS7
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from profanity import profanity
 from werkzeug.exceptions import HTTPException
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.wrappers import Response
@@ -169,7 +169,13 @@ def create() -> str:
         flask.flash("Username too short")
         return flask.abort(400)
 
-    if profanity.contains_profanity(request["local_part"]) or profanity.contains_profanity(request["name"]):  # type: ignore
+    if ("*" in profanity.censor(request["local_part"])) or (
+        "*" in profanity.censor(request["name"])
+    ):
+        flask.flash("Public data contains profanity")
+        return flask.abort(400)
+
+    if simple_profanity.contains_profanity(request["local_part"]) or simple_profanity.contains_profanity(request["name"].lower()):  # type: ignore
         flask.flash("Public data contains profanity")
         return flask.abort(400)
 
