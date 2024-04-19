@@ -225,7 +225,8 @@ The https://{DOMAIN}/ e-mail signup system on behalf of {request['local_part']}@
             server.login(email_id, request["password"])
             server.sendmail(email_id, ADMIN, message.as_string())
         except Exception:
-            pass
+            flask.flash("Failed to create the mailbox")
+            return flask.flash(403)
         finally:
             server.quit()
 
