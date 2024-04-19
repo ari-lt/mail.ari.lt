@@ -14,6 +14,9 @@ import os
 import secrets
 import smtplib
 import typing as t
+from datetime import datetime
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from warnings import filterwarnings as filter_warnings
 
 import better_profanity
@@ -48,6 +51,7 @@ limiter: Limiter = Limiter(
 
 DOMAIN: str = "ari.lt"
 MDOMAIN: str = "mail.ari.lt"
+ADMIN: str = "ari@ari.lt"
 
 DEFAULT_REQUEST: t.Final[t.Dict[str, t.Any]] = {
     "active": "1",
@@ -137,6 +141,7 @@ def index() -> str:
         domain=DOMAIN,
         mdomain=MDOMAIN,
         min_username=MIN_USERNAME,
+        admin=ADMIN,
     )
 
 
@@ -173,11 +178,7 @@ def create() -> str:
 
     if better_profanity.profanity.contains_profanity(
         request["local_part"]
-    ) or better_profanity.profanity.contains_profanity(request["name"]):
-        flask.flash("Public data contains profanity")
-        return flask.abort(400)
-
-    if simple_profanity.contains_profanity(request["local_part"]) or simple_profanity.contains_profanity(request["name"].lower()):  # type: ignore
+    ) or better_profanity.profanity.contains_profanity(request["name"].lower()):
         flask.flash("Public data contains profanity")
         return flask.abort(400)
 
@@ -188,6 +189,45 @@ def create() -> str:
             "X-Api-Key": API_KEY,
         },
     )
+
+    if r.ok:
+        email_id: str = f"{request['local_part']}@{DOMAIN}"
+        message: MIMEMultipart = MIMEMultipart()
+
+        message["From"] = email_id
+        message["To"] = ADMIN
+        message["X-Priority"] = "1"
+        message["Subject"] = (
+            f"[IMPORTANT] New mailbox: {request['local_part']} ({request['name']})"
+        )
+        message.attach(
+            MIMEText(
+                f"""Hello, {ADMIN}!
+
+This is an email notifying you of this new mailbox by the name of {request['name']} <{email_id}> existence to make moderation easier. \
+Please see https://{MDOMAIN}/ if you think something is wrong and that action needs to be taken. \
+The user has, in fact, agreed to this.
+
+Best wishes,
+
+The https://{DOMAIN}/ e-mail signup system on behalf of {request['local_part']}@{DOMAIN}
+
+{datetime.now()}""",
+                "plain",
+            )
+        )
+
+        server: smtplib.SMTP = smtplib.SMTP(MDOMAIN, 587)
+
+        try:
+            server.ehlo()
+            server.starttls()
+            server.login(email_id, request["password"])
+            server.sendmail(email_id, ADMIN, message.as_string())
+        except Exception:
+            pass
+        finally:
+            server.quit()
 
     flask.flash("Mailbox created")
 
@@ -242,15 +282,15 @@ def delete_mailbox() -> str:
         flask.flash("Missing credentials")
         return flask.abort(400)
 
-    email: str = f"{form['local_part'].lower()}@{DOMAIN}"
+    email_id: str = f"{form['local_part'].lower()}@{DOMAIN}"
 
     server: smtplib.SMTP = smtplib.SMTP(MDOMAIN, 587)
 
     try:
         server.ehlo()
         server.starttls()
-        server.login(email, form["password"])
-    except smtplib.SMTPAuthenticationError:
+        server.login(email_id, form["password"])
+    except Exception:
         flask.flash("Invalid mailbox credentials")
         return flask.abort(403)
     finally:

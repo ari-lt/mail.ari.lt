@@ -26,7 +26,7 @@
 </ul>
 
 <p>
-    So, by signing up, you also approve of this logging policy.
+    So, by signing up, you also approve of this logging policy as well as the server sending an email to <a href="mailto:{{ admin }}">{{ admin }}</a> from your account on behalf of you.
 </p>
 
 <form id="form">
@@ -61,7 +61,7 @@
         </div>
 
         <div class="form-group">
-            <label for="terms">I trust <a href="https://{{ mdomain | escape }}/">{{ mdomain | escape }}</a> ("the e-mail server") with my e-mails, and I agree to not use the email server for spam, phishing, or any other malicious or abusive purpose. I agree with the logging policy and I know that my e-mail may be terminated if abusive behaviour is detected and confirmed by the e-mail server administrators:</label>
+            <label for="terms">I trust <a href="https://{{ mdomain | escape }}/">{{ mdomain | escape }}</a> ("the e-mail server") with my e-mails, and I agree to not use the email server for spam, phishing, or any other malicious or abusive purpose. I agree with the logging policy and I know that my e-mail may be terminated if abusive behaviour is detected and confirmed by the e-mail server administrators. I know and agree that <a href="mailto:{{ admin }}">{{ admin }}</a> will receive an e-mail from me as soon as I sign up:</label>
             <input required value="off" onclick="this.value=(this.value==='on'?'off':'on');this.checked=(this.value==='on')" type="checkbox" id="terms" name="terms" />
         </div>
 
