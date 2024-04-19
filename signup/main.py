@@ -24,6 +24,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.padding import PKCS7
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from profanity import profanity
 from werkzeug.exceptions import HTTPException
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.wrappers import Response
@@ -166,6 +167,10 @@ def create() -> str:
 
     if len(request["local_part"]) < MIN_USERNAME:
         flask.flash("Username too short")
+        return flask.abort(400)
+
+    if profanity.contains_profanity(request["local_part"]):  # type: ignore
+        flask.flash("Username contains profanity")
         return flask.abort(400)
 
     r: requests.Response = requests.post(

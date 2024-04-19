@@ -3,3 +3,4 @@ flask-ishuman
 flask-limiter
 cryptography
 requests
+profanity
