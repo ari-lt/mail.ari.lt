@@ -169,8 +169,8 @@ def create() -> str:
         flask.flash("Username too short")
         return flask.abort(400)
 
-    if profanity.contains_profanity(request["local_part"]):  # type: ignore
-        flask.flash("Username contains profanity")
+    if profanity.contains_profanity(request["local_part"]) or profanity.contains_profanity(request["name"]):  # type: ignore
+        flask.flash("Public data contains profanity")
         return flask.abort(400)
 
     r: requests.Response = requests.post(
