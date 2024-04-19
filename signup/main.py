@@ -178,7 +178,7 @@ def create() -> str:
 
     if better_profanity.profanity.contains_profanity(
         request["local_part"]
-    ) or better_profanity.profanity.contains_profanity(request["name"].lower()):
+    ) or better_profanity.profanity.contains_profanity(request["name"]):
         flask.flash("Public data contains profanity")
         return flask.abort(400)
 
