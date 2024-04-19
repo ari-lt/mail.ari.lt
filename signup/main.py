@@ -56,7 +56,7 @@ ADMIN: str = "ari@ari.lt"
 DEFAULT_REQUEST: t.Final[t.Dict[str, t.Any]] = {
     "active": "1",
     "domain": DOMAIN,
-    "quota": "2048",
+    "quota": "4096",
     "force_pw_update": "0",
     "tls_enforce_in": "0",
     "tls_enforce_out": "0",
