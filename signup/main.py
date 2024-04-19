@@ -16,9 +16,9 @@ import smtplib
 import typing as t
 from warnings import filterwarnings as filter_warnings
 
+import better_profanity
 import flask
 import flask_ishuman
-import profanity  # type: ignore
 import requests
 from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
@@ -169,8 +169,8 @@ def create() -> str:
         flask.flash("Username too short")
         return flask.abort(400)
 
-    if ("*" in profanity.censor(request["local_part"])) or (
-        "*" in profanity.censor(request["name"])
+    if ("*" in better_profanity.censor(request["local_part"])) or (
+        "*" in better_profanity.censor(request["name"])
     ):
         flask.flash("Public data contains profanity")
         return flask.abort(400)
