@@ -41,8 +41,7 @@
 
         <div class="form-group">
             <label for="name">Display name:</label>
-            <input required type="text" id="name" name="name" placeholder="Jane Dane" />
-        </div>
+            <input required type="text" id="name" name="name" placeholder="Jane Dane" /> </div>
 
         <div class="form-group">
             <label for="password">Password:</label>
@@ -62,7 +61,7 @@
         </div>
 
         <div class="form-group">
-            <label for="terms">I trust <a href="https://{{ mdomain | escape }}/">{{ mdomain | escape }}</a> ("the e-mail server") with my e-mails, and I agree to not use the email server for spam, phishing, or any other malicious or abusive purpose (such sending abusive or illegal material (e.g. lolicon, CSAM, piracy, etc.)). I agree with the logging policy and I know that my e-mail may be terminated if abusive behaviour is detected and confirmed by the e-mail server administrators. I know and agree that <a href="mailto:{{ admin }}">{{ admin }}</a> will receive an e-mail on behalf of me as soon as I sign up, and I take full responsibility for my actions while staying on this email server:</label>
+            <label for="terms">I trust <a href="https://{{ mdomain | escape }}/">{{ mdomain | escape }}</a> ("the e-mail server") with my e-mails, and I agree to not use the email server for spam, phishing, or any other malicious, illegal or abusive purpose (such sending abusive or illegal material (e.g. Lolicon, CSAM, piracy, anything illegal in Germany or Lithuania, etc.)). I agree with the logging policy and I know that my e-mail may be terminated if abusive behaviour is detected and confirmed by the e-mail server administrators. I know and agree that <a href="mailto:{{ admin }}">{{ admin }}</a> will receive an e-mail on behalf of me as soon as I sign up, and I take full responsibility for my actions while staying on this email server (check the checkbox if you <b>100% agree with the mention policies and terms</b>):</label>
             <input required value="off" onclick="this.value=(this.value==='on'?'off':'on');this.checked=(this.value==='on')" type="checkbox" id="terms" name="terms" />
         </div>
 
