@@ -161,6 +161,10 @@ def create() -> str:
         flask.flash("Terms were not accepted")
         return flask.abort(403)
 
+    if not form.get("reason") or not form["reason"].strip():
+        flask.flash("No join reason supplied")
+        return flask.abort(400)
+
     request = DEFAULT_REQUEST.copy()
 
     for k in ("local_part", "name", "password", "password2"):
@@ -176,9 +180,13 @@ def create() -> str:
         flask.flash("Username too short")
         return flask.abort(400)
 
-    if better_profanity.profanity.contains_profanity(
-        request["local_part"]
-    ) or better_profanity.profanity.contains_profanity(request["name"]):
+    reason: str = form["reason"].replace("\n", "  ")
+
+    if (
+        better_profanity.profanity.contains_profanity(request["local_part"])
+        or better_profanity.profanity.contains_profanity(request["name"])
+        or better_profanity.profanity.contains_profanity(reason)
+    ):
         flask.flash("Public data contains profanity")
         return flask.abort(400)
 
@@ -200,6 +208,7 @@ def create() -> str:
         message["Subject"] = (
             f"[IMPORTANT] New mailbox: {request['local_part']} ({request['name']})"
         )
+
         message.attach(
             MIMEText(
                 f"""Hello, {ADMIN}!
@@ -207,6 +216,10 @@ def create() -> str:
 This is an email notifying you of this new mailbox by the name of {request['name']} <{email_id}> existence to make moderation easier. \
 Please see https://{MDOMAIN}/ if you think something is wrong and that action needs to be taken. \
 The user has, in fact, agreed to this.
+
+The following part has the user-supplied signup reason:
+
+    {reason}
 
 Best wishes,
 
