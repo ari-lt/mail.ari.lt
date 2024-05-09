@@ -9,25 +9,54 @@
 <h1>Sign up for an <a href="https://{{ domain | escape }}/">{{ domain | escape }}</a> e-mail</h1>
 
 <p>
-    If you want an e-mail address on this server, fill in the following form with <b>JavaScript and Cookies enabled</b>, this page also requires the <b>Browser crypto API</b>:
+    If you wish to secure an e-mail address on our server, kindly complete the form provided, ensuring <b>JavaScript and Cookies are enabled</b>.
+    Please note that this page requires the <b>Browser crypto API</b> for functionality.
 </p>
 
 <p>
-    Make sure your username wouldn't violate common username rules and your password is strong enough (weak password will make the mailbox creation fail).
-    This e-mail is not fully anonymous, as <a href="https://mailcow.email/">Mailcow</a> logs:
+    When choosing a username, maintain decorum and respect common norms of username creation.
+    Also, remember to choose a strong password, as weak passwords may hinder the creation of your mailbox.
+    Please understand that this e-mail service is not entirely anonymous, since <a href="https://mailcow.email/">Mailcow</a> maintains logs of:
 </p>
 
 <ul>
-    <li>IP addreesses</li>
-    <li>Login attempts</li>
-    <li>Autodiscover attempts</li>
-    <li>Rate limit triggers</li>
-    <li>E-mail origin and target</li>
-    <li>... everything that Mailcow logs</li>
+    <li>IP addresses (in-memory logs)</li>
+    <li>Login/Logout attempts (in-memory logs)</li>
+    <li>Autodiscover attempts (in-memory logs)</li>
+    <li>Rate limit triggers (in-memory logs)</li>
+    <li>Origin and target of e-mails (RSpamD, in-memory logs)</li>
+    <li>Email subject matter and spam score (RSpamD, in-memory logs)</li>
+    <li>... and more, all encapsulated within the <a href="https://github.com/mailcow/mailcow-dockerized">Mailcow's source code</a> for further clarification</li>
 </ul>
 
 <p>
-    So, by signing up, you also approve of this logging policy as well as the server sending an email to <a href="mailto:{{ admin }}">{{ admin }}</a> from your account on behalf of you.
+    In-memory logs are logs which get stored temporarily, while RSpamD and other types may get stored for longer.
+</p>
+
+<p>
+    By registering, you consent to this logging policy and acknowledge that this server will send an email to
+    <a href="mailto:{{ admin }}">{{ admin }}</a> from your account on your behalf, the email will include your display name,
+    your email address, your signup reason, and a timestamp.
+</p>
+
+<p>
+    Bear in mind that under typical circumstances, administrators only have access to abstract information,
+    as listed (or not listed) above, and not to the contents of your mailbox. In the event of a legitimate request from authorities,
+    your mailbox may be handed over to abide by the law. Therefore, it is incumbent upon you to act responsibly, comply with legal
+    requirements in your email use, and ensure any sensitive information is securely encrypted. This means you have to comply with
+    German, Lithuanian, and your Local law.
+</p>
+
+<p>
+    Should you have queries, please send an email to <a href="mailto:ari@ari.lt">ari@ari.lt</a>.
+    For encrypted communication, use GPG key <a href="https://keys.openpgp.org/vks/v1/by-fingerprint/4FAD63E936B305906A6C4894A50D5B4B599AF8A2">4FAD63E936B305906A6C4894A50D5B4B599AF8A2</a>.
+    Please be aware that I may utilize the same GPG key to encrypt or sign my own responses, too.
+</p>
+
+<p>
+    <b>The websites <a href="https://mail.ari.lt/">mail.ari.lt</a>, <a href="https://ari.lt/">ari.lt</a>, and the like, are NOT LIABLE FOR THE ACTIONS OF THEIR USERS.
+    IT IS THEIR RESPONSIBILITY TO ABIDE WITH LAW, STAY UP-TO-DATE WITH LOGGING POLICY AND TERMS, AND BE RESPONSIBLE FOR THEIR OWN ACTIONS, USERS UNDER THE AGE OF LEGAL CONSENT
+    OR WITHOUT A LEGAL GUARDIANS PERMISSION AND CONSENT MAY NOT USE THIS EMAIL SERVER.</b>
 </p>
 
 <form id="form">
@@ -66,7 +95,7 @@
         </div>
 
         <div class="form-group">
-            <label for="terms">I trust <a href="https://{{ mdomain | escape }}/">{{ mdomain | escape }}</a> ("the e-mail server") with my e-mails, and I agree to not use the email server for spam, phishing, or any other malicious, illegal or abusive purpose (such sending abusive or illegal material (e.g. Lolicon, CSAM, piracy, anything illegal in Germany or Lithuania, etc.)). I agree with the logging policy and I know that my e-mail may be terminated if abusive behaviour is detected and confirmed by the e-mail server administrators. I know and agree that <a href="mailto:{{ admin }}">{{ admin }}</a> will receive an e-mail on behalf of me as soon as I sign up, and I take full responsibility for my actions while staying on this email server (check the checkbox if you <b>100% agree with the mention policies and terms</b>):</label>
+            <label for="terms">I am the age of legal consent (or I have a legal guardian who consents for me) and I trust <a href="https://{{ mdomain | escape }}/">{{ mdomain | escape }}</a> ("the e-mail server") with my e-mails, I understood and agree with the logging policy of the email server, and agree with all terms and disclaimers. I am responsible for my own actions while using the email server:</label>
             <input required value="off" onclick="this.value=(this.value==='on'?'off':'on');this.checked=(this.value==='on')" type="checkbox" id="terms" name="terms" />
         </div>
 
