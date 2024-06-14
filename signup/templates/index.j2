@@ -8,6 +8,10 @@
 {% block body %}
 <h1>Sign up for an <a href="https://{{ domain | escape }}/">{{ domain | escape }}</a> e-mail</h1>
 
+<noscript>
+    <h2 style="color:red">Please enable JavaScript for client-side AES and cookies for session stuff. Else the signup process will <i>fail</i>.</h2>
+</noscript>
+
 <p>
     If you wish to secure an e-mail address on our server, kindly complete the form provided, ensuring <b>JavaScript and Cookies are enabled</b>.
     Please note that this page requires the <b>Browser crypto API</b> for functionality.
@@ -59,7 +63,7 @@
     OR WITHOUT A LEGAL GUARDIANS PERMISSION AND CONSENT MAY NOT USE THIS EMAIL SERVER.</b>
 </p>
 
-<form id="form">
+<form id="form" method="post">
     <fieldset>
         <legend>Sign up</legend>
 
