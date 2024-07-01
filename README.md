@@ -1,3 +1,5 @@
+# This repository has been migrated to the self-hosted ari-web Forgejo instance: <https://git.ari.lt/ari.lt/mail.ari.lt>
+# This repository has been migrated to the self-hosted ari-web Forgejo instance: <https://git.ari.lt/ari/mail.ari.lt>
 # [mail.ari.lt](https://mail.ari.lt/)
 
 > ari-web mailcow instance
